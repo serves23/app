@@ -36,14 +36,17 @@ export async function POST(req: Request) {
     event.type === "customer.subscription.updated" ||
     event.type === "customer.subscription.deleted"
   ) {
-    const sub = event.data.object as Stripe.Subscription;
+    const sub = event.data.object as Stripe.Subscription & {
+      current_period_end?: number | null;
+    };
     const customerId = String(sub.customer);
     const userId = await userIdFromCustomer(customerId);
 
     if (userId) {
-      const periodEnd = sub.current_period_end
-        ? new Date(sub.current_period_end * 1000).toISOString()
-        : null;
+      const periodEnd =
+        sub.current_period_end != null
+          ? new Date(sub.current_period_end * 1000).toISOString()
+          : null;
 
       await supabaseAdmin.from("subscriptions").upsert({
         user_id: userId,
