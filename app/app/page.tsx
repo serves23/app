@@ -3,7 +3,7 @@ import { supabaseServer } from "@/lib/supabase/server";
 import { createCheckoutAction } from "./server-actions";
 
 export default async function AppPage() {
-  const supabase = supabaseServer();
+  const supabase = await supabaseServer();
   const { data: auth } = await supabase.auth.getUser();
   const user = auth.user;
 
