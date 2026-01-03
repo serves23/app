@@ -1,36 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ultra SaaS Starter
 
-## Getting Started
+Minimal Supabase auth + Stripe subscriptions scaffold.
 
-First, run the development server:
+## Setup
+- Copy `.env.local` and fill real values (use Stripe/Supabase test keys while building).
+- Run the SQL schema in Supabase: `supabase/schema.sql` (SQL Editor).
+- Install deps (already installed): `npm install`.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Dev
+- Start app: `npm run dev` then open http://localhost:3000.
+- Stripe webhooks (local): `stripe listen --forward-to localhost:3000/api/stripe/webhook`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Notes
+- Remove the Stripe `apiVersion` override in `app/app/server-actions.ts` and `app/api/stripe/webhook/route.ts` if your account API version differs.
+- Auth routes: `/signup`, `/login`. App gate: `/app` (locks until subscription active).
