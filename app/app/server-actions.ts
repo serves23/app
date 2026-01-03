@@ -45,3 +45,42 @@ export async function createCheckoutAction() {
 
   redirect(session.url!);
 }
+
+export async function createTargetAction(formData: FormData) {
+  const workingPath = String(formData.get("workingPath") || "").trim();
+  const backupPath = String(formData.get("backupPath") || "").trim();
+
+  const supabase = await supabaseServer();
+  const { data: auth } = await supabase.auth.getUser();
+  const user = auth.user;
+  if (!user) redirect("/login");
+
+  if (!workingPath || !backupPath) redirect("/app?error=missing_paths");
+
+  await supabase
+    .from("backup_targets")
+    .insert({
+      user_id: user.id,
+      working_path: workingPath,
+      backup_path: backupPath,
+      status: "healthy",
+      last_synced_at: new Date().toISOString(),
+      notes: "Placeholder status — connect real scanner to update this.",
+    })
+    .throwOnError();
+
+  redirect("/app");
+}
+
+export async function deleteTargetAction(formData: FormData) {
+  const id = String(formData.get("id") || "").trim();
+  const supabase = await supabaseServer();
+  const { data: auth } = await supabase.auth.getUser();
+  const user = auth.user;
+  if (!user) redirect("/login");
+
+  if (!id) redirect("/app?error=missing_id");
+
+  await supabase.from("backup_targets").delete().eq("id", id).eq("user_id", user.id);
+  redirect("/app");
+}

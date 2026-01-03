@@ -52,3 +52,38 @@ create policy "subs_select_own"
 on public.subscriptions for select
 to authenticated
 using (user_id = auth.uid());
+
+-- Backup targets for the app
+create table if not exists public.backup_targets (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users(id) on delete cascade,
+  working_path text not null,
+  backup_path text not null,
+  last_synced_at timestamptz,
+  status text default 'unknown',
+  notes text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+alter table public.backup_targets enable row level security;
+
+create policy "backup_targets_select_own"
+on public.backup_targets for select
+to authenticated
+using (user_id = auth.uid());
+
+create policy "backup_targets_insert_own"
+on public.backup_targets for insert
+to authenticated
+with check (user_id = auth.uid());
+
+create policy "backup_targets_update_own"
+on public.backup_targets for update
+to authenticated
+using (user_id = auth.uid());
+
+create policy "backup_targets_delete_own"
+on public.backup_targets for delete
+to authenticated
+using (user_id = auth.uid());
