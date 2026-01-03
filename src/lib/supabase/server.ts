@@ -9,7 +9,8 @@ export function supabaseServer() {
     {
       cookies: {
         getAll() {
-          return cookieStore.getAll();
+          const all = cookieStore.getAll?.();
+          return Array.isArray(all) ? all : [];
         },
         setAll(cookiesToSet) {
           try {
