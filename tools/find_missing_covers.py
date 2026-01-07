@@ -299,8 +299,18 @@ def run_ui():
     font_base = ("Helvetica", 11)
 
     style = ttk.Style(root)
-    style.configure("TButton", font=font_base, foreground=text_color, padding=8)
-    style.configure("Accent.TButton", background=accent, foreground="#ffffff")
+    style.configure("TButton", font=font_base, foreground=text_color, padding=8, borderwidth=0, relief="flat")
+    style.configure(
+        "Accent.TButton",
+        background=accent,
+        foreground="#ffffff",
+        padding=8,
+        borderwidth=0,
+        relief="flat",
+        focusthickness=3,
+        focuscolor=accent,
+        bordercolor=accent,
+    )
     style.map(
         "Accent.TButton",
         background=[("active", "#4fa149")],
