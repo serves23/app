@@ -97,7 +97,7 @@ export default async function AppPage() {
             </span>
           ) : (
             <form action={createCheckoutAction}>
-              <button className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">
+              <button className="rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-[var(--accent-strong)]">
                 Unlock with subscription
               </button>
             </form>
@@ -111,7 +111,7 @@ export default async function AppPage() {
               Subscribe to run health checks, see risks, and get weekly reports.
             </p>
             <form action={createCheckoutAction} className="mt-4">
-              <button className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">
+              <button className="rounded-full bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-[var(--accent-strong)]">
                 Start subscription
               </button>
             </form>
@@ -148,7 +148,7 @@ export default async function AppPage() {
                     />
                   </label>
                   <div className="flex justify-end">
-                    <button className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">
+                    <button className="rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-[var(--accent-strong)]">
                       Add location
                     </button>
                   </div>

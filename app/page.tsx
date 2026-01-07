@@ -52,7 +52,7 @@ export default async function Home() {
             <>
               <Link
                 href="/signup"
-                className="rounded-full bg-white text-slate-900 px-4 py-2 text-sm font-semibold transition hover:bg-slate-200"
+                className="rounded-full bg-[var(--accent)] text-slate-900 px-4 py-2 text-sm font-semibold transition hover:bg-[var(--accent-strong)]"
               >
                 Start free trial
               </Link>
@@ -80,7 +80,7 @@ export default async function Home() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href={user ? "/app" : "/signup"}
-                className="rounded-full bg-white text-slate-900 px-5 py-3 text-sm font-semibold transition hover:bg-slate-200"
+                className="rounded-full bg-[var(--accent)] text-slate-900 px-5 py-3 text-sm font-semibold transition hover:bg-[var(--accent-strong)]"
               >
                 Start free trial
               </Link>
@@ -206,13 +206,13 @@ export default async function Home() {
           </div>
           <div className="flex flex-wrap gap-3">
             <Link
-              href={user ? "/app" : "/signup"}
-              className="rounded-full bg-white text-slate-900 px-5 py-3 text-sm font-semibold transition hover:bg-slate-200"
-            >
-              Start free trial
-            </Link>
-            <Link
-              href={user ? "/app" : "/login"}
+                href={user ? "/app" : "/signup"}
+                className="rounded-full bg-[var(--accent)] text-slate-900 px-5 py-3 text-sm font-semibold transition hover:bg-[var(--accent-strong)]"
+              >
+                Start free trial
+              </Link>
+              <Link
+                href={user ? "/app" : "/login"}
               className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/40 hover:bg-white/10"
             >
               Join early access
@@ -230,7 +230,7 @@ export default async function Home() {
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             <Link
               href={user ? "/app" : "/signup"}
-              className="rounded-full bg-white text-slate-900 px-5 py-3 text-sm font-semibold transition hover:bg-slate-200"
+              className="rounded-full bg-[var(--accent)] text-slate-900 px-5 py-3 text-sm font-semibold transition hover:bg-[var(--accent-strong)]"
             >
               Start free trial
             </Link>
