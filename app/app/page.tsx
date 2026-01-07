@@ -85,6 +85,23 @@ export default async function AppPage() {
   return (
     <main className="min-h-screen bg-slate-950 text-slate-50">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-10">
+        <nav className="text-xs text-slate-300">
+          <ol className="flex items-center gap-2">
+            <li>
+              <Link
+                href="/"
+                className="rounded-full border border-white/10 px-2 py-1 transition hover:border-white/30 hover:text-white"
+              >
+                Home
+              </Link>
+            </li>
+            <li className="text-slate-500">/</li>
+            <li className="rounded-full bg-[var(--accent)]/20 px-2 py-1 text-[var(--accent)] ring-1 ring-[var(--accent)]/40">
+              Dashboard
+            </li>
+          </ol>
+        </nav>
+
         <header className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm text-slate-300">Signed in as {user.email}</p>
