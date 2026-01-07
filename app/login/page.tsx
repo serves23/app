@@ -1,14 +1,74 @@
+import Link from "next/link";
 import { loginAction } from "./server-actions";
 
 export default function LoginPage() {
   return (
-    <main style={{ maxWidth: 420, margin: "60px auto" }}>
-      <h1>Login</h1>
-      <form action={loginAction} style={{ display: "grid", gap: 12 }}>
-        <input name="email" placeholder="Email" type="email" required />
-        <input name="password" placeholder="Password" type="password" required />
-        <button type="submit">Sign in</button>
-      </form>
-    </main>
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50">
+      <div className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center px-6 py-12 lg:flex-row lg:items-stretch lg:gap-12">
+        <div className="flex-1 space-y-4 text-center lg:text-left">
+          <p className="text-sm uppercase tracking-wide text-slate-300">
+            Welcome back
+          </p>
+          <h1 className="text-4xl font-semibold leading-tight text-white">
+            Sign in and keep your creative work safe.
+          </h1>
+          <p className="text-base text-slate-200/80">
+            Your dashboard tracks backup health, sync freshness, and redundancy risks.
+          </p>
+          <div className="flex items-center justify-center gap-3 text-sm text-slate-300 lg:justify-start">
+            <span className="rounded-full bg-emerald-400/10 px-3 py-1 font-semibold text-emerald-200 ring-1 ring-emerald-400/30">
+              No ads
+            </span>
+            <span className="rounded-full bg-white/10 px-3 py-1 font-semibold text-slate-100 ring-1 ring-white/20">
+              No data sold
+            </span>
+          </div>
+        </div>
+
+        <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur lg:w-[420px]">
+          <form action={loginAction} className="grid gap-4">
+            <div>
+              <label className="text-sm font-semibold text-slate-100">
+                Email
+              </label>
+              <input
+                name="email"
+                type="email"
+                required
+                className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none placeholder:text-slate-400 focus:border-white/30"
+                placeholder="you@example.com"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-semibold text-slate-100">
+                Password
+              </label>
+              <input
+                name="password"
+                type="password"
+                required
+                className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none placeholder:text-slate-400 focus:border-white/30"
+                placeholder="••••••••"
+              />
+            </div>
+            <button
+              type="submit"
+              className="mt-2 w-full rounded-full bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200"
+            >
+              Sign in
+            </button>
+          </form>
+          <p className="mt-4 text-center text-sm text-slate-300">
+            Don’t have an account?{" "}
+            <Link
+              href="/signup"
+              className="font-semibold text-white underline underline-offset-4"
+            >
+              Start free trial
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
