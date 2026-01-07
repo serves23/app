@@ -4,7 +4,28 @@ import { logoutAction } from "./actions";
 
 export default async function Home() {
   const supabase = await supabaseServer();
-  const { data: auth } = await supabase.auth.getUser();
+  const { data: auth, error: authError } = await supabase.auth.getUser();
+
+  if (authError?.message?.toLowerCase().includes("invalid refresh token")) {
+    await supabase.auth.signOut();
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50">
+        <main className="mx-auto flex max-w-3xl flex-col items-start gap-4 px-6 py-10">
+          <h1 className="text-2xl font-semibold">Session expired</h1>
+          <p className="text-sm text-slate-200/80">
+            Your session was invalid. Please log in again.
+          </p>
+          <Link
+            href="/login"
+            className="rounded-full bg-white text-slate-900 px-4 py-2 text-sm font-semibold transition hover:bg-slate-200"
+          >
+            Go to login
+          </Link>
+        </main>
+      </div>
+    );
+  }
+
   const user = auth.user;
 
   return (

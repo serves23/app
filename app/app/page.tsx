@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { supabaseServer } from "@/lib/supabase/server";
 import {
   createCheckoutAction,
@@ -8,7 +9,13 @@ import {
 
 export default async function AppPage() {
   const supabase = await supabaseServer();
-  const { data: auth } = await supabase.auth.getUser();
+  const { data: auth, error: authError } = await supabase.auth.getUser();
+
+  if (authError?.message?.toLowerCase().includes("invalid refresh token")) {
+    await supabase.auth.signOut();
+    redirect("/login?session=expired");
+  }
+
   const user = auth.user;
 
   if (!user) {
