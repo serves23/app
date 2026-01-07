@@ -5,22 +5,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50">
       <div className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center px-6 py-12 lg:flex-row lg:items-stretch lg:gap-12">
-        <nav className="mb-6 w-full text-xs text-slate-300 lg:mb-10">
-          <ol className="flex items-center gap-2">
-            <li>
-              <Link
-                href="/"
-                className="rounded-full border border-white/10 px-2 py-1 transition hover:border-white/30 hover:text-white"
-              >
-                Home
-              </Link>
-            </li>
-            <li className="text-slate-500">/</li>
-            <li className="rounded-full bg-[var(--accent)]/20 px-2 py-1 text-[var(--accent)] ring-1 ring-[var(--accent)]/40">
-              Sign in
-            </li>
-          </ol>
-        </nav>
         <div className="flex-1 space-y-4 text-center lg:text-left">
           <p className="text-sm uppercase tracking-wide text-slate-300">
             Welcome back
