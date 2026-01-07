@@ -7,7 +7,9 @@ Find audio files missing album art.
 - Optional: `pip install mutagen` for embedded cover detection (recommended).
 
 ## Run
-- Double-click `run_find_missing_covers.command` (macOS) or run:
+- macOS: double-click `run_find_missing_covers.command`.
+- Windows: double-click `run_find_missing_covers.bat`.
+- CLI (any OS):
   ```bash
   python3 find_missing_covers.py /path/to/folder
   ```
