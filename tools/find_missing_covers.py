@@ -12,6 +12,7 @@ Notes:
 from __future__ import annotations
 
 import argparse
+import base64
 import io
 import os
 import sys
@@ -185,8 +186,15 @@ def embed_cover(path: Path, cover_bytes: bytes) -> bool:
             audio.save()
             return True
         if ext in {".ogg", ".oga", ".opus"}:
-            # OggVorbis picture embedding is more involved; skip for now.
-            return False
+            audio = OggVorbis(path)
+            pic = Picture()
+            pic.data = cover_bytes
+            pic.type = 3
+            pic.mime = "image/jpeg"
+            encoded = base64.b64encode(pic.write()).decode("ascii")
+            audio["metadata_block_picture"] = [encoded]
+            audio.save()
+            return True
     except Exception:
         return False
     return False
