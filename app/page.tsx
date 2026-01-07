@@ -200,8 +200,8 @@ export default async function Home() {
           <div>
             <h2 className="text-2xl font-semibold">Early access pricing</h2>
             <p className="mt-2 text-slate-200/80">
-              $7/month during beta · Cancel anytime · Price increases when v1 launches.
-              No long onboarding. No lock-in.
+              $7/month during beta · $10/month after launch · Cancel anytime. No long
+              onboarding. No lock-in.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
