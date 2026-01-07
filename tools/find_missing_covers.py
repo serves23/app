@@ -299,7 +299,16 @@ def run_ui():
     font_base = ("Helvetica", 11)
 
     style = ttk.Style(root)
-    style.configure("TButton", font=font_base, foreground=text_color, padding=8, borderwidth=0, relief="flat")
+    style.theme_use("clam")
+    style.configure(
+        "TButton",
+        font=font_base,
+        foreground="#ffffff",
+        background=accent,
+        padding=8,
+        borderwidth=0,
+        relief="flat",
+    )
     style.configure(
         "Accent.TButton",
         background=accent,
@@ -364,10 +373,10 @@ def run_ui():
     btn_row = tk.Frame(controls, bg="#ffffff")
     btn_row.pack(fill="x", pady=8)
 
-    pick_btn = ttk.Button(btn_row, text="Choose folder", command=choose_folder, style="TButton")
+    pick_btn = ttk.Button(btn_row, text="Choose folder", command=choose_folder, style="Accent.TButton")
     pick_btn.pack(side="left", padx=(0, 8))
 
-    scan_btn = ttk.Button(btn_row, text="Scan only", command=lambda: run_action(False), style="TButton")
+    scan_btn = ttk.Button(btn_row, text="Scan only", command=lambda: run_action(False), style="Accent.TButton")
     scan_btn.pack(side="left", padx=8)
 
     fix_btn = ttk.Button(
