@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Optional, Tuple
 
 try:
+    # Tagging / embedding support
     import mutagen
     from mutagen.flac import FLAC, Picture
     from mutagen.id3 import APIC, ID3, error as ID3Error
@@ -31,6 +32,7 @@ except Exception:
     MUTAGEN_AVAILABLE = False
 
 try:
+    # Used for iTunes Search API calls
     import requests
 except Exception:
     requests = None
@@ -46,6 +48,7 @@ except Exception:
 
 
 AUDIO_EXTS = {".mp3", ".flac", ".m4a", ".aac", ".alac", ".ogg", ".oga", ".opus", ".wav", ".aif", ".aiff"}
+# These filenames count as a valid per-folder cover
 COVER_FILES = {"cover.jpg", "cover.jpeg", "cover.png", "folder.jpg", "folder.png", "front.jpg", "front.png"}
 
 
@@ -77,7 +80,7 @@ def folder_has_cover_file(folder: Path) -> bool:
 
 
 def read_tags(path: Path) -> Tuple[Optional[str], Optional[str]]:
-    """Return (artist, album) if available."""
+    """Return (artist, album) if available (used for cover search)."""
     if not MUTAGEN_AVAILABLE:
         return None, None
     ext = path.suffix.lower()
@@ -132,6 +135,7 @@ def has_embedded_cover(path: Path) -> bool:
 
 
 def fetch_cover_bytes(artist: Optional[str], album: Optional[str]) -> Optional[bytes]:
+    """Hit iTunes Search API for a best-guess album cover."""
     if requests is None or not artist or not album:
         return None
     try:
@@ -158,6 +162,7 @@ def fetch_cover_bytes(artist: Optional[str], album: Optional[str]) -> Optional[b
 
 
 def embed_cover(path: Path, cover_bytes: bytes) -> bool:
+    """Embed cover art into supported formats."""
     if not MUTAGEN_AVAILABLE:
         return False
     ext = path.suffix.lower()
@@ -201,6 +206,7 @@ def embed_cover(path: Path, cover_bytes: bytes) -> bool:
 
 
 def scan(folder: Path) -> tuple[list[Path], list[Path]]:
+    """Walk a folder tree, collect audio files, and flag missing covers."""
     audio_files: list[Path] = []
     missing: list[Path] = []
     for root, _, files in os.walk(folder):
@@ -218,6 +224,7 @@ def scan(folder: Path) -> tuple[list[Path], list[Path]]:
 
 
 def write_report(folder: Path, missing: list[Path]) -> Path:
+    """Write a simple report file listing missing covers."""
     report_path = folder / "missing_covers_report.txt"
     with report_path.open("w", encoding="utf-8") as f:
         if not missing:
@@ -230,6 +237,7 @@ def write_report(folder: Path, missing: list[Path]) -> Path:
 
 
 def run_scan(folder: Path, download_and_embed: bool = False, ui_log: Optional[callable] = None) -> str:
+    """Scan (and optionally fix) missing covers, with optional UI logger."""
     log = ui_log or (lambda msg: print(msg))
     audio_files, missing = scan(folder)
     fixed = 0
@@ -258,6 +266,7 @@ def run_scan(folder: Path, download_and_embed: bool = False, ui_log: Optional[ca
 
 
 def run_cli():
+    """CLI entrypoint: optional folder arg, optional --fix."""
     parser = argparse.ArgumentParser(description="Find and optionally fix missing cover art.")
     parser.add_argument("folder", nargs="?", help="Folder to scan (optional, opens dialog if omitted).")
     parser.add_argument("--fix", action="store_true", help="Download and embed covers when possible.")
@@ -273,6 +282,7 @@ def run_cli():
 
 
 def run_ui():
+    """Tkinter UI wrapper with folder picker and scan/fix buttons."""
     if tk is None or ttk is None:
         print("Tkinter not available; falling back to CLI.")
         run_cli()
