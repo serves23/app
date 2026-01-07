@@ -60,7 +60,7 @@ export default async function Home() {
                 href="/login"
                 className="rounded-full border border-white/20 px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-white/40 hover:bg-white/10"
               >
-                Join early access
+                Sign in
               </Link>
             </>
           )}
@@ -88,7 +88,7 @@ export default async function Home() {
                 href={user ? "/app" : "/login"}
                 className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/40 hover:bg-white/10"
               >
-                Join early access
+                Sign in
               </Link>
             </div>
           </div>
@@ -238,7 +238,7 @@ export default async function Home() {
               href={user ? "/app" : "/login"}
               className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/40 hover:bg-white/10"
             >
-              Join early access
+              Sign in
             </Link>
           </div>
           <p className="mt-4 text-xs text-slate-300">
