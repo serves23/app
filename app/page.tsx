@@ -31,7 +31,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <div className="text-lg font-semibold tracking-tight">Ultra SaaS</div>
+        <div className="text-lg font-semibold tracking-tight">FlowFile</div>
         <div className="flex items-center gap-3">
           {user ? (
             <>
