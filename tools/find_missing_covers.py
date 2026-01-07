@@ -290,12 +290,37 @@ def run_ui():
 
     root = tk.Tk()
     root.title("Cover Checker")
-    root.geometry("520x360")
+    root.geometry("560x420")
+    root.configure(bg="#ffffff")
+
+    # Simple styling for a clean green/white look
+    accent = "#59b356"
+    text_color = "#0f172a"
+    font_base = ("Helvetica", 11)
+
+    style = ttk.Style(root)
+    style.configure("TButton", font=font_base, foreground=text_color, padding=8)
+    style.configure("Accent.TButton", background=accent, foreground="#ffffff")
+    style.map(
+        "Accent.TButton",
+        background=[("active", "#4fa149")],
+        foreground=[("active", "#ffffff")],
+    )
+    style.configure("TLabel", font=font_base, foreground=text_color, background="#ffffff")
 
     selected_folder: Path | None = None
 
-    log_box = tk.Text(root, height=12, bg="#0f172a", fg="#e2e8f0", insertbackground="white")
-    log_box.pack(fill="both", expand=True, padx=12, pady=(12, 4))
+    log_box = tk.Text(
+        root,
+        height=12,
+        bg="#f7fff5",
+        fg=text_color,
+        insertbackground=text_color,
+        font=("Helvetica", 10),
+        relief="solid",
+        bd=1,
+    )
+    log_box.pack(fill="both", expand=True, padx=16, pady=(16, 6))
 
     def log(msg: str):
         log_box.insert("end", msg + "\n")
@@ -317,24 +342,31 @@ def run_ui():
         summary = run_scan(selected_folder, download_and_embed=fix, ui_log=log)
         notify(summary, "Cover checker")
 
-    controls = tk.Frame(root, bg="#0f172a")
-    controls.pack(fill="x", padx=12, pady=8)
+    controls = tk.Frame(root, bg="#ffffff")
+    controls.pack(fill="x", padx=16, pady=10)
 
     folder_var = tk.StringVar(value="No folder selected")
-    folder_label = tk.Label(controls, textvariable=folder_var, fg="#e2e8f0", bg="#0f172a")
+    folder_label = tk.Label(
+        controls, textvariable=folder_var, fg=text_color, bg="#ffffff", font=("Helvetica", 10, "italic")
+    )
     folder_label.pack(anchor="w")
 
-    btn_row = tk.Frame(controls, bg="#0f172a")
-    btn_row.pack(fill="x", pady=6)
+    btn_row = tk.Frame(controls, bg="#ffffff")
+    btn_row.pack(fill="x", pady=8)
 
-    pick_btn = tk.Button(btn_row, text="Choose folder", command=choose_folder)
-    pick_btn.pack(side="left", padx=(0, 6))
+    pick_btn = ttk.Button(btn_row, text="Choose folder", command=choose_folder, style="TButton")
+    pick_btn.pack(side="left", padx=(0, 8))
 
-    scan_btn = tk.Button(btn_row, text="Scan only", command=lambda: run_action(False))
-    scan_btn.pack(side="left", padx=6)
+    scan_btn = ttk.Button(btn_row, text="Scan only", command=lambda: run_action(False), style="TButton")
+    scan_btn.pack(side="left", padx=8)
 
-    fix_btn = tk.Button(btn_row, text="Scan + download covers", command=lambda: run_action(True))
-    fix_btn.pack(side="left", padx=6)
+    fix_btn = ttk.Button(
+        btn_row,
+        text="Scan + download covers",
+        command=lambda: run_action(True),
+        style="Accent.TButton",
+    )
+    fix_btn.pack(side="left", padx=8)
 
     root.mainloop()
 
