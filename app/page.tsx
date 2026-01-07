@@ -31,7 +31,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <h1 className="text-[100px] font-bold leading-none tracking-tight text-white">
+        <h1 className="text-4xl sm:text-5xl lg:text-[72px] xl:text-[100px] font-bold leading-none tracking-tight text-white">
           FlowFile
         </h1>
         <div className="flex items-center gap-3">
@@ -69,7 +69,7 @@ export default async function Home() {
         </div>
       </header>
 
-      <main className="mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-24 pt-8">
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-5 pb-20 pt-8 sm:px-6">
         <section className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
           <div className="space-y-6">
             <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
