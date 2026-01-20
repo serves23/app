@@ -11,6 +11,20 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function AppPage() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return (
+      <main className="min-h-screen bg-slate-950 text-slate-50">
+        <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 px-6 py-10">
+          <h1 className="text-2xl font-semibold">Supabase not configured</h1>
+          <p className="text-sm text-slate-200/80">
+            Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your
+            deployment environment, then redeploy.
+          </p>
+        </div>
+      </main>
+    );
+  }
+
   const supabase = await supabaseServer();
   const { data: auth, error: authError } = await supabase.auth.getUser();
 

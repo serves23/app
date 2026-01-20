@@ -5,6 +5,20 @@ import { logoutAction } from "./actions";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50">
+        <main className="mx-auto flex max-w-3xl flex-col items-start gap-4 px-6 py-10">
+          <h1 className="text-2xl font-semibold">Supabase not configured</h1>
+          <p className="text-sm text-slate-200/80">
+            Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your
+            deployment environment, then redeploy.
+          </p>
+        </main>
+      </div>
+    );
+  }
+
   const supabase = await supabaseServer();
   const { data: auth, error: authError } = await supabase.auth.getUser();
 
