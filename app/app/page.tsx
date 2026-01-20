@@ -5,6 +5,7 @@ import {
   createCheckoutAction,
   createTargetAction,
   deleteTargetAction,
+  scanTargetAction,
 } from "./server-actions";
 
 export default async function AppPage() {
@@ -197,12 +198,20 @@ export default async function AppPage() {
                         </span>
                         {item.notes ? <span>Note: {item.notes}</span> : null}
                       </div>
-                      <form action={deleteTargetAction} className="mt-3">
-                        <input type="hidden" name="id" value={item.id} />
-                        <button className="text-xs text-slate-300 underline underline-offset-4 hover:text-slate-100">
-                          Remove
-                        </button>
-                      </form>
+                      <div className="mt-3 flex flex-wrap items-center gap-4">
+                        <form action={scanTargetAction}>
+                          <input type="hidden" name="id" value={item.id} />
+                          <button className="text-xs text-slate-200 underline underline-offset-4 hover:text-white">
+                            Scan now
+                          </button>
+                        </form>
+                        <form action={deleteTargetAction}>
+                          <input type="hidden" name="id" value={item.id} />
+                          <button className="text-xs text-slate-300 underline underline-offset-4 hover:text-slate-100">
+                            Remove
+                          </button>
+                        </form>
+                      </div>
                     </div>
                   ))}
                   {(targets ?? []).length === 0 && (

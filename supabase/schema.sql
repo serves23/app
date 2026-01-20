@@ -26,28 +26,33 @@ alter table public.customers enable row level security;
 alter table public.subscriptions enable row level security;
 
 -- Profiles: user can read/write their own
+drop policy if exists "profiles_select_own" on public.profiles;
 create policy "profiles_select_own"
 on public.profiles for select
 to authenticated
 using (id = auth.uid());
 
+drop policy if exists "profiles_insert_own" on public.profiles;
 create policy "profiles_insert_own"
 on public.profiles for insert
 to authenticated
 with check (id = auth.uid());
 
+drop policy if exists "profiles_update_own" on public.profiles;
 create policy "profiles_update_own"
 on public.profiles for update
 to authenticated
 using (id = auth.uid());
 
 -- Customers: user can read their own (writes happen via service role in webhook/action)
+drop policy if exists "customers_select_own" on public.customers;
 create policy "customers_select_own"
 on public.customers for select
 to authenticated
 using (user_id = auth.uid());
 
 -- Subscriptions: user can read their own
+drop policy if exists "subs_select_own" on public.subscriptions;
 create policy "subs_select_own"
 on public.subscriptions for select
 to authenticated
@@ -68,21 +73,25 @@ create table if not exists public.backup_targets (
 
 alter table public.backup_targets enable row level security;
 
+drop policy if exists "backup_targets_select_own" on public.backup_targets;
 create policy "backup_targets_select_own"
 on public.backup_targets for select
 to authenticated
 using (user_id = auth.uid());
 
+drop policy if exists "backup_targets_insert_own" on public.backup_targets;
 create policy "backup_targets_insert_own"
 on public.backup_targets for insert
 to authenticated
 with check (user_id = auth.uid());
 
+drop policy if exists "backup_targets_update_own" on public.backup_targets;
 create policy "backup_targets_update_own"
 on public.backup_targets for update
 to authenticated
 using (user_id = auth.uid());
 
+drop policy if exists "backup_targets_delete_own" on public.backup_targets;
 create policy "backup_targets_delete_own"
 on public.backup_targets for delete
 to authenticated
