@@ -50,6 +50,13 @@ export default async function AppPage() {
   const active = sub?.status === "active" || sub?.status === "trialing";
   const now = Number(new Date());
 
+  function getLogTargetPath(log: (typeof logs)[number]) {
+    const target = Array.isArray(log.backup_targets)
+      ? log.backup_targets[0]
+      : log.backup_targets;
+    return target?.working_path || "Unknown target";
+  }
+
   function statusBadge(status?: string, lastSynced?: string | null) {
     const asDate = lastSynced ? new Date(lastSynced) : null;
     const ageHours = asDate ? (now - asDate.getTime()) / 3.6e6 : Infinity;
@@ -269,7 +276,7 @@ export default async function AppPage() {
               >
                 <div>
                   <p className="text-sm font-semibold text-white">
-                    {log.backup_targets?.working_path || "Unknown target"}
+                    {getLogTargetPath(log)}
                   </p>
                   <p className="text-xs text-slate-300">
                     {log.notes || "No notes"} •{" "}
