@@ -2,6 +2,8 @@ import Link from "next/link";
 import { supabaseServer } from "@/lib/supabase/server";
 import { logoutAction } from "./actions";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const supabase = await supabaseServer();
   const { data: auth, error: authError } = await supabase.auth.getUser();
