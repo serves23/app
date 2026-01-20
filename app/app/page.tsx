@@ -50,7 +50,9 @@ export default async function AppPage() {
   const active = sub?.status === "active" || sub?.status === "trialing";
   const now = Number(new Date());
 
-  function getLogTargetPath(log: (typeof logs)[number]) {
+  type LogItem = NonNullable<typeof logs>[number];
+
+  function getLogTargetPath(log: LogItem) {
     const target = Array.isArray(log.backup_targets)
       ? log.backup_targets[0]
       : log.backup_targets;
