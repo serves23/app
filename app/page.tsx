@@ -31,7 +31,9 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <div className="text-lg font-semibold tracking-tight">Ultra SaaS</div>
+        <h1 className="text-4xl sm:text-5xl lg:text-[72px] xl:text-[100px] font-bold leading-none tracking-tight text-white">
+          FlowFile
+        </h1>
         <div className="flex items-center gap-3">
           {user ? (
             <>
@@ -67,7 +69,7 @@ export default async function Home() {
         </div>
       </header>
 
-      <main className="mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-24 pt-8">
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-5 pb-20 pt-8 sm:px-6">
         <section className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
           <div className="space-y-6">
             <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
@@ -196,26 +198,31 @@ export default async function Home() {
           </p>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center rounded-3xl border border-white/10 bg-white/5 p-6">
-          <div>
-            <h2 className="text-2xl font-semibold">Early access pricing</h2>
-            <p className="mt-2 text-slate-200/80">
-              $7/month during beta · Cancel anytime · Price increases when v1 launches.
-              No long onboarding. No lock-in.
+        <section className="grid gap-6 rounded-3xl border border-[var(--accent)]/40 bg-white/10 p-6 shadow-xl lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="space-y-3">
+            <p className="inline-flex items-center rounded-full bg-[var(--accent)]/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--accent)] ring-1 ring-[var(--accent)]/40">
+              Early access offer
+            </p>
+            <h2 className="text-3xl font-semibold text-white">Simple, honest pricing</h2>
+            <p className="text-lg font-semibold text-white">
+              $7/month during beta · $10/month after launch
+            </p>
+            <p className="text-sm text-slate-200/80">
+              Free for 30 days · Cancel anytime · No lock-in · No long onboarding.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap justify-start gap-3">
             <Link
-                href={user ? "/app" : "/signup"}
-                className="rounded-full bg-[var(--accent)] text-slate-900 px-5 py-3 text-sm font-semibold transition hover:bg-[var(--accent-strong)]"
-              >
-                Start free trial
-              </Link>
-              <Link
-                href={user ? "/app" : "/login"}
-              className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/40 hover:bg-white/10"
+              href={user ? "/app" : "/signup"}
+              className="rounded-full bg-[var(--accent)] text-slate-900 px-6 py-3 text-sm font-semibold transition hover:bg-[var(--accent-strong)]"
             >
-              Join early access
+              Start free trial
+            </Link>
+            <Link
+              href={user ? "/app" : "/login"}
+              className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/50 hover:bg-white/10"
+            >
+              Sign in
             </Link>
           </div>
         </section>

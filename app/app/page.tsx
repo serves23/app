@@ -38,6 +38,14 @@ export default async function AppPage() {
     .select("id, working_path, backup_path, status, last_synced_at, notes")
     .eq("user_id", user.id)
     .order("updated_at", { ascending: false });
+  const { data: logs } = await supabase
+    .from("backup_health_log")
+    .select(
+      "id, target_id, status, notes, metrics, created_at, backup_targets!inner(working_path, user_id)"
+    )
+    .eq("backup_targets.user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(10);
 
   const active = sub?.status === "active" || sub?.status === "trialing";
   const now = Number(new Date());
@@ -221,11 +229,11 @@ export default async function AppPage() {
                     </div>
                   )}
                 </div>
-              </div>
+          </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                <h2 className="text-xl font-semibold">Weekly health report</h2>
-                <p className="mt-2 text-sm text-slate-200/80">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+            <h2 className="text-xl font-semibold">Weekly health report</h2>
+            <p className="mt-2 text-sm text-slate-200/80">
                   A plain-English email summary of freshness and redundancy. Hook your
                   email provider to send this automatically.
                 </p>
@@ -244,12 +252,50 @@ export default async function AppPage() {
                     <li>• Yellow: /ClientB/Renders → NAS (last sync 7d ago)</li>
                     <li>• Red: /PassionProject/RAW missing in backup</li>
                   </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold">Recent health checks</h2>
+            <p className="text-xs text-slate-300">Last 10 entries</p>
+          </div>
+          <div className="mt-4 space-y-3">
+            {(logs ?? []).map((log) => (
+              <div
+                key={log.id}
+                className="flex flex-col gap-2 rounded-xl border border-white/10 bg-slate-900/40 p-4 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <div>
+                  <p className="text-sm font-semibold text-white">
+                    {log.backup_targets?.working_path || "Unknown target"}
+                  </p>
+                  <p className="text-xs text-slate-300">
+                    {log.notes || "No notes"} •{" "}
+                    {log.created_at ? new Date(log.created_at).toLocaleString() : ""}
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 text-xs text-slate-300">
+                  {statusBadge(log.status, log.created_at)}
+                  {log.metrics?.freshness_hours != null && (
+                    <span className="rounded-full bg-white/5 px-3 py-1">
+                      Δ {Math.round(log.metrics.freshness_hours)}h
+                    </span>
+                  )}
                 </div>
               </div>
-            </section>
-          </>
-        )}
-      </div>
-    </main>
+            ))}
+            {(logs ?? []).length === 0 && (
+              <div className="rounded-xl border border-dashed border-white/20 bg-white/5 p-4 text-sm text-slate-200/80">
+                No health checks yet. Run the agent to send status updates.
+              </div>
+            )}
+          </div>
+        </section>
+      </>
+    )}
+  </div>
+</main>
   );
 }

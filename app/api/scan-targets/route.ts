@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 function readBearerToken(req: Request) {
   const authHeader = req.headers.get("authorization");
@@ -13,6 +13,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Missing bearer token" }, { status: 401 });
   }
 
+  const supabaseAdmin = getSupabaseAdmin();
   const { data: authData, error: authError } = await supabaseAdmin.auth.getUser(
     token
   );

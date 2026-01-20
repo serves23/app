@@ -1,4 +1,4 @@
-# Ultra SaaS Starter
+# FlowFile Starter
 
 Minimal Supabase auth + Stripe subscriptions scaffold.
 

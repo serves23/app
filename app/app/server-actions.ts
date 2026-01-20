@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { supabaseServer } from "@/lib/supabase/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { buildScanSummary, type ScanStats } from "@/lib/scanner";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -106,6 +106,7 @@ export async function createCheckoutAction() {
   const user = auth.user;
   if (!user) redirect("/login");
 
+  const supabaseAdmin = getSupabaseAdmin();
   const { data: existing } = await supabaseAdmin
     .from("customers")
     .select("stripe_customer_id")

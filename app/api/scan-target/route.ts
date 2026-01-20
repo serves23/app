@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { buildScanSummary, type ScanStats } from "@/lib/scanner";
 
 type ScanPayload = {
@@ -31,6 +31,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Missing bearer token" }, { status: 401 });
   }
 
+  const supabaseAdmin = getSupabaseAdmin();
   const { data: authData, error: authError } = await supabaseAdmin.auth.getUser(
     token
   );

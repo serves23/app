@@ -96,3 +96,24 @@ create policy "backup_targets_delete_own"
 on public.backup_targets for delete
 to authenticated
 using (user_id = auth.uid());
+
+-- Health log entries (written by agent via service key/API)
+create table if not exists public.backup_health_log (
+  id uuid primary key default gen_random_uuid(),
+  target_id uuid references public.backup_targets(id) on delete cascade,
+  status text,
+  notes text,
+  metrics jsonb,
+  created_at timestamptz default now()
+);
+
+alter table public.backup_health_log enable row level security;
+
+create policy "backup_health_log_select_own"
+on public.backup_health_log for select
+to authenticated
+using (
+  target_id in (
+    select id from public.backup_targets where user_id = auth.uid()
+  )
+);
