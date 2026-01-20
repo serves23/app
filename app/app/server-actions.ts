@@ -6,6 +6,7 @@ import { supabaseServer } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { buildScanSummary, type ScanStats } from "@/lib/scanner";
 import fs from "node:fs/promises";
+import type { Dirent } from "node:fs";
 import path from "node:path";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -57,7 +58,7 @@ async function scanPathStats(rootPath: string): Promise<ScanStats> {
     const current = queue.pop();
     if (!current) break;
 
-    let entries: fs.Dirent[];
+    let entries: Dirent[];
     try {
       entries = await fs.readdir(current, { withFileTypes: true });
     } catch (error) {
